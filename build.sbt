@@ -1,9 +1,9 @@
 import sbt._
 import Keys._
 val scioVersion = "0.10.3"
-val beamVersion = "2.28.0"
+val beamVersion = "2.29.0"
 lazy val commonSettings = Def.settings(
-  organization := "RyanBerti",
+  organization := "ryanberti",
   // Semantic versioning http://semver.org/
   version := "0.1.0-SNAPSHOT",
   scalaVersion := "2.13.3",

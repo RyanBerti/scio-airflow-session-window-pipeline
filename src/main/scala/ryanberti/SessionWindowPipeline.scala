@@ -50,10 +50,10 @@ object SessionWindowPipeline {
         FileIOUtils.forTarget(args.required("output-destination"), avroType.schema)
       ).getPerDestinationOutputFilenames).map(kv => kv.getValue)
 
-    // Convert filenames to event time instants map entires, write them in json
-    // to the output topic
+    // Convert filenames to event time instants map entries, write them in json
+    // to the output topic. This is where we could de-dupe/throttle/filter as-needed.
     val json = fileNames
-      .map(fn => "event_time" -> FileIOUtils.partitionPathToInstant(fn).getMillis)
+      .map(fn => Map("event_time_second" -> FileIOUtils.partitionPathToInstant(fn).getMillis / 1000))
       .map(m => m.asJson.noSpaces)
 
     json.write(PubsubIO.string(args.required("output-topic")))(PubsubIO.WriteParam(None, None))

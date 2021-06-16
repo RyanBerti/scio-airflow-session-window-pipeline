@@ -38,8 +38,7 @@ class SessionWindowPipelineJobTest extends PipelineSpec {
     SessionMetrics("1", 45, Map("browse" -> 2, "click" -> 1)),
   )
 
-  val expectedEventTimes: Seq[String] = Map("event_time" -> new DateTime(startTime * 1000).withSecondOfMinute(0).getMillis)
-    .map(_.asJson.noSpaces).toSeq
+  val expectedEventTimes = Seq(Map("event_time_second" -> new DateTime(startTime * 1000).withSecondOfMinute(0).getMillis / 1000).asJson.noSpaces)
 
   "Simple Late Arriving Data Example" should "work" in {
     JobTest[SessionWindowPipeline.type]

@@ -68,7 +68,7 @@ public class FileIOUtils {
 
         @Override
         public String getFilename(BoundedWindow window, PaneInfo pane, int numShards, int shardIndex, Compression compression) {
-            return String.format("%s/pt=%d/%s",
+            return String.format("%s/rt=%d/%s",
                     instantToPartitionPath(((IntervalWindow)window).start()),
                     processingTime,
                     defaultNaming.getFilename(window, pane, numShards, shardIndex, compression));

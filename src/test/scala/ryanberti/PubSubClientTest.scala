@@ -13,11 +13,14 @@ import scala.language.postfixOps
 
 class PubSubClientTest extends AnyFlatSpec with Matchers {
 
+  val gcpProject = "<your GCP project>"
+  val pubSubTopic = "<your PS topic>"
+
   // run this manually to write example messages to a real topic
   // to test the pipeline end-to-end
   ignore should "write messages within the same session" in {
 
-    val psClient = new PubSubClient("<your project id>", "<your topic name>")
+    val psClient = new PubSubClient(gcpProject, pubSubTopic)
 
     val sessionStartSeconds = DateTime.now()
       .withSecondOfMinute(0)
@@ -55,7 +58,7 @@ class PubSubClientTest extends AnyFlatSpec with Matchers {
   // to test the pipeline end-to-end
   ignore should "write messages within the same session with lateness" in {
 
-    val psClient = new PubSubClient("<your project id>", "<your topic name>")
+    val psClient = new PubSubClient(gcpProject, pubSubTopic)
 
     val sessionStartSeconds = DateTime.now()
       .withSecondOfMinute(0)
@@ -64,22 +67,22 @@ class PubSubClientTest extends AnyFlatSpec with Matchers {
 
     val browseOne = ExampleMessage(
       timestamp = Some(Timestamp(seconds = sessionStartSeconds)),
-      sessionId = "3",
+      sessionId = "2",
       messageName = "browse")
 
     val browseTwo = ExampleMessage(
       timestamp = Some(Timestamp(seconds = sessionStartSeconds + 30)),
-      sessionId = "3",
+      sessionId = "2",
       messageName = "browse")
 
     val clickOne = ExampleMessage(
       timestamp = Some(Timestamp(seconds = sessionStartSeconds + 40)),
-      sessionId = "3",
+      sessionId = "2",
       messageName = "click")
 
     val clickTwo = ExampleMessage(
       timestamp = Some(Timestamp(seconds = sessionStartSeconds + 45)),
-      sessionId = "3",
+      sessionId = "2",
       messageName = "click")
 
     implicit val ec = ExecutionContext.global
